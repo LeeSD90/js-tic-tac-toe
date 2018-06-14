@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(160, 190, 204);
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 780px;
+    margin: 30px auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    background-color: azure;
+    color: rgb(17, 61, 14);
+    font-size: 7rem;
+}
+
+.cell:nth-child(odd) {
+    background-color: rgb(87, 114, 172);
+}
