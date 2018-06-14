@@ -29,13 +29,18 @@ const DisplayController = (() => {
 	return { renderBoard }
 })();
 
-const Player = (name, side) => {
+const playerFactory = (name, side) => {
 	return { name, side }
 };
 
 const Game = (() => {
 
+	let currentPlayer = undefined;
+	let player1 = playerFactory("Player 1", "X");
+	let player2 = playerFactory("Player 2", "O");
+
 	const create = function () {
+		currentPlayer = player1;
 		_render();
 		_setListeners();
 	}
@@ -48,14 +53,32 @@ const Game = (() => {
 		
 		document.getElementById("board").addEventListener('click', function(e) {
 			if(e.target && e.target.matches("div.cell")) {
-				makeMove(e.target);
+				_makeMove(e.target);
 			}
 		}, false);
 
 	}
 
-	const makeMove = function (cell) {
+	const _makeMove = function (cell) {
 		if(cell.innerHTML) { alert("You need to pick an empty spot on the board!"); }
+		else { 
+			var i = 0;
+			while((cell = cell.previousSibling) != null){
+				i++;
+			}
+			GameBoard.move(currentPlayer, i);
+		}
+		_update();
+	}
+
+	const _update = function () {
+		currentPlayer = (currentPlayer === player1 ? player2 : player1);
+		console.log(player2)
+		_render();
+	}
+
+	const _checkWin = function () {
+
 	}
 
 	return { create }
