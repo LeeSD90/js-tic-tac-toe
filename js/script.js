@@ -111,12 +111,39 @@ const Game = (() => {
 		document.getElementById("board").addEventListener('click', function(e) {
 			if(e.target && e.target.matches("div.cell")) {
 				if(playing){
-					GameBoard.move(currentPlayer, e.target);
-					_update();
-				} else { alert("Start a new game first!") }
+					if(e.target.innerHTML) { 
+						_toast("You need to pick an empty spot on the board!") 
+					}
+					else { 
+						GameBoard.move(currentPlayer, e.target);
+						_update();
+					}
+				} else { _toast("Start a new game first!") }
 			}
 		}, false);
 
+	}
+
+	const _toast = function (message) {
+		var toast = document.getElementById("toast");
+		toast.style.opacity = 1;
+		toast.style.display = "block";
+		toast.innerHTML = message;
+		setTimeout( "fade()", 3000);
+
+		fade = function () {
+			var opacity = 1;
+			var timer = setInterval(function () {
+				if(opacity <= 0.1){
+					clearInterval(timer);
+					toast.style.display = "none";
+				}
+				toast.style.opacity = opacity;
+				toast.style.filter = 'alpha(opacity=' + opacity * 100 + ")";
+				opacity -= opacity * 0.1;
+			}, 50);
+			
+		}
 	}
 
 	const _update = function () {
@@ -124,11 +151,11 @@ const Game = (() => {
 
 		switch(GameBoard.checkWin(currentPlayer)){
 			case 1: 
-				alert(`${currentPlayer.name} wins!`);
+				_toast(`${currentPlayer.name} wins!`);
 				playing = false;
 				break;
 			case -1:
-				alert("Draw!");
+				_toast("Draw!");
 				playing = false;
 				break;
 			default:

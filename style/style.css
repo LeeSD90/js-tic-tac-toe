@@ -17,7 +17,7 @@ h1::after {
     position: absolute;
     content: '';
     width: 20%;
-    border: 1px solid rgb(50, 109, 187);
+    border: 1px solid rgba(98, 132, 177, 0.397);
     left: 40%;
 }
 
@@ -125,4 +125,18 @@ h2::after {
 
 #start {
     display: none;
+}
+
+#toast {
+    position: absolute;
+    width: 500px;
+    top: 45%;
+    right: 10%;
+    padding: 20px;
+    z-index: 10;
+    display: none;
+    text-align: center;
+    background: rgb(209, 155, 139);
+    border-radius: 10px;
+    border: 1px solid rgba(177, 177, 177, 0.692)
 }
