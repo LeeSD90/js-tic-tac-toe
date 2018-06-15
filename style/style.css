@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(52, 79, 92);
+    background-color: rgb(255, 255, 255);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 #board {
@@ -17,13 +18,63 @@ body {
     justify-content: center;
     height: 250px;
     background-color: azure;
-    color: rgb(47, 70, 64);
-    background-color: rgb(87, 114, 172);
-    border: 1px solid black;
+    color: rgb(50, 109, 187);
+    background-color: rgb(221, 221, 221);
+    border: 1px solid rgba(175, 175, 175, 0.671);
     font-size: 7rem;
 }
 
 .cell:hover {
-    background-color: rgb(89, 185, 192);
-    border: 1px solid white;
+    background-color: rgb(50, 109, 187);
+    color: rgb(202, 202, 202);
+    border: 1px solid rgb(65, 142, 243);
 }
+
+.options {
+    font-size: 2.5rem;
+    color: rgb(82, 121, 165);
+    font-weight: bold;
+}
+
+.name {
+    display: block;
+    overflow: hidden;
+    padding: 0 5px 0 0 ;
+}
+
+.players {
+    display: none;
+}
+
+.restart {
+    display: none;
+}
+
+.input-group {
+    justify-content: center;
+}
+
+.input-group-append input,
+.input-group-append .input-group-text {
+    cursor: pointer;
+}
+
+.input-group input {
+    background: rgba(178, 179, 185, 0.281);
+    max-width: 175px;
+    border: 1px solid #ced4da;
+    color: rgb(50, 109, 187);
+    border-radius: 5px 0 0 5px;
+    margin: 0 0 0 50px;
+    padding: 0 15px;
+}
+
+.input-group-append input:focus,
+.input-group-append input:focus + .input-group-text {
+    max-width: 400px;
+    outline: none;
+    border: none;
+    background: rgba(222, 234, 255, 0.842);
+    width: auto;
+}
+

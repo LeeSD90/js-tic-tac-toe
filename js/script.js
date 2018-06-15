@@ -38,7 +38,6 @@ const GameBoard = (() => {
 			if (document.getElementById("board").childNodes[i].innerHTML != ''){
 				counter++;
 			}
-			console.log(counter)
 			if(counter == 9) { return -1 }
 		}
 
@@ -79,6 +78,8 @@ const Game = (() => {
 	let player2 = playerFactory("Player 2", "O");
 
 	const create = function () {
+		player1.name = document.getElementById("p1name").value;
+		player2.name = document.getElementById("p2name").value;
 		currentPlayer = player1;
 		_render();
 		_setListeners();
@@ -89,11 +90,11 @@ const Game = (() => {
 	}
 
 	const _setListeners = function () {
-		
+
 		document.getElementById("board").addEventListener('click', function(e) {
 			if(e.target && e.target.matches("div.cell")) {
 				GameBoard.move(currentPlayer, e.target);
-				_update;
+				_update();
 			}
 		}, false);
 
