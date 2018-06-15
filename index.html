@@ -15,7 +15,9 @@
     </head>
 
     <body>
-
+        <header>
+            <h1>Tic Tac Toe</h1>
+        </header>
         <div class="contianer">
             <div class="row justify-content-center">
                 <div class="col-4">
@@ -25,28 +27,31 @@
                 </div>
             </div>
             <div class="row options justify-content-center">
-
-                <div class="col-4 players">
+                <div class="col-12" id="players">
+                    <h2>Name your players</h2>
                     <div class="input-group mb-3">
-                        Player X 
+                        X
                         <div class="input-group-append">
                             <input placeholder="Player 1" id="p1name" class="name" type="text">
                             <span class="input-group-text" id="basic-addon2"><i onclick="document.getElementById('p1name').focus()" class="fas fa-pencil-alt"></i></span>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        Player O 
+                        O 
                         <div class="input-group-append">
                             <input placeholder="Player 2" id="p2name" class="name" type="text">
                             <span class="input-group-text" id="basic-addon2"><i onclick="document.getElementById('p2name').focus()" class="fas fa-pencil-alt"></i></span>
                         </div>
                     </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-primary" onclick="Game.start();" id="start">Go!</button>
+                    </div>
                 </div>
 
-                <div class="col-4 menu">
+                <div class="col-12 menu">
                     <div class="input-group">
-                        <button class="btn btn-primary new">New Game</button>
-                        <button class="btn btn-primary restart">Restart</button>
+                        <button class="btn btn-primary" onclick="Game.create();" id="new">New Game</button>
+                        <button class="btn btn-primary" id="restart">Restart</button>
                     </div>
                 </div>
 

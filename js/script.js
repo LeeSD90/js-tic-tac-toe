@@ -76,11 +76,25 @@ const Game = (() => {
 	let currentPlayer = undefined;
 	let player1 = playerFactory("Player 1", "X");
 	let player2 = playerFactory("Player 2", "O");
+	let playing = false;
 
 	const create = function () {
+		document.getElementById("new").style.display = "none";
+		document.getElementById("players").style.display = "block";
+		document.getElementById("start").style.display = "block";
+	}
+
+	const restart = function () {
+
+	}
+
+	const start = function () {
+		document.getElementById("players").style.display = "none";
+		document.getElementById("start").style.display = "none";
 		player1.name = document.getElementById("p1name").value;
 		player2.name = document.getElementById("p2name").value;
 		currentPlayer = player1;
+		playing = true;
 		_render();
 		_setListeners();
 	}
@@ -93,8 +107,10 @@ const Game = (() => {
 
 		document.getElementById("board").addEventListener('click', function(e) {
 			if(e.target && e.target.matches("div.cell")) {
-				GameBoard.move(currentPlayer, e.target);
-				_update();
+				if(playing){
+					GameBoard.move(currentPlayer, e.target);
+					_update();
+				} else { alert("Start a game first!") }
 			}
 		}, false);
 
@@ -116,10 +132,9 @@ const Game = (() => {
 
 	}
 
-	return { create }
+	return { create, start, restart }
 
 })();
 
 $(document).ready(function() { 
-	Game.create() 
 });
