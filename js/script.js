@@ -56,27 +56,12 @@ const GameBoard = (() => {
 
 })();
 
-const DisplayController = (() => {
-
-	const renderBoard = function () {
-		let board = '';
-
-		for(i = 0; i < GameBoard.board.length; i++){
-			board += `<div class="cell col-4">${GameBoard.board[i].toUpperCase()}</div>`
-		}
-
-		return board;
-	}
-
-	return { renderBoard }
-})();
-
 const Game = (() => {
 
-	let currentPlayer = undefined;
-	let player1 = playerFactory("Player 1", "X");
-	let player2 = playerFactory("Player 2", "O");
-	let playing = false;
+	var currentPlayer = undefined;
+	var player1 = playerFactory("Player 1", "X");
+	var player2 = playerFactory("Player 2", "O");
+	var playing = false;
 
 	const create = function () {
 		document.getElementById("new").style.display = "none";
@@ -84,23 +69,41 @@ const Game = (() => {
 		document.getElementById("start").style.display = "block";
 	}
 
-	const restart = function () {
-
-	}
-
 	const start = function () {
 		document.getElementById("players").style.display = "none";
 		document.getElementById("start").style.display = "none";
+		document.getElementById("restart").style.display = "block";
 		player1.name = document.getElementById("p1name").value ? document.getElementById("p1name").value : "Player 1";
 		player2.name = document.getElementById("p2name").value ? document.getElementById("p2name").value : "Player 2";
 		currentPlayer = player1;
 		playing = true;
+		_clearListeners();
 		_render();
 		_setListeners();
 	}
 
+	const restart = function () {
+		document.getElementById("restart").style.display = "none";
+		playing = false;
+		GameBoard.clear();
+		this.create();
+	}
+
 	const _render = function () {
-		document.getElementById('board').innerHTML = DisplayController.renderBoard();
+		let board = '';
+
+		for(i = 0; i < GameBoard.board.length; i++){
+			board += `<div class="cell col-4">${GameBoard.board[i].toUpperCase()}</div>`
+		}
+		
+		document.getElementById('board').innerHTML = board;
+	}
+
+	const _clearListeners = function () {
+		var board = document.getElementById("board");
+		boardClone = board.cloneNode(true);
+
+		board.parentNode.replaceChild(boardClone, board);
 	}
 
 	const _setListeners = function () {
@@ -110,7 +113,7 @@ const Game = (() => {
 				if(playing){
 					GameBoard.move(currentPlayer, e.target);
 					_update();
-				} else { alert("Start a game first!") }
+				} else { alert("Start a new game first!") }
 			}
 		}, false);
 
@@ -122,9 +125,11 @@ const Game = (() => {
 		switch(GameBoard.checkWin(currentPlayer)){
 			case 1: 
 				alert(`${currentPlayer.name} wins!`);
+				playing = false;
 				break;
 			case -1:
 				alert("Draw!");
+				playing = false;
 				break;
 			default:
 				currentPlayer = (currentPlayer === player1 ? player2 : player1);
@@ -135,6 +140,3 @@ const Game = (() => {
 	return { create, start, restart }
 
 })();
-
-$(document).ready(function() { 
-});
