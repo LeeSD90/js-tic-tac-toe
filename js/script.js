@@ -91,8 +91,8 @@ const Game = (() => {
 	const start = function () {
 		document.getElementById("players").style.display = "none";
 		document.getElementById("start").style.display = "none";
-		player1.name = document.getElementById("p1name").value;
-		player2.name = document.getElementById("p2name").value;
+		player1.name = document.getElementById("p1name").value ? document.getElementById("p1name").value : "Player 1";
+		player2.name = document.getElementById("p2name").value ? document.getElementById("p2name").value : "Player 2";
 		currentPlayer = player1;
 		playing = true;
 		_render();
