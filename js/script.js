@@ -1,3 +1,7 @@
+const playerFactory = (name, side) => {
+	return { name, side }
+};
+
 const GameBoard = (() => {
 
 	let board = ['','','','','','','','',''];
@@ -6,8 +10,13 @@ const GameBoard = (() => {
 		this.board = ['','','','','','','','',''];
 	}
 
-	const move = function (player, position) {
-		this.board.splice(position, 1, player.side)
+	const move = function (player, cell) {
+		if(cell.innerHTML) { 
+			alert("You need to pick an empty spot on the board!"); 
+		}
+		else{
+			this.board.splice(_getIndexOfCell(cell), 1, player.side)
+		}
 	}
 
 	const checkWin = function (player) {
@@ -32,8 +41,16 @@ const GameBoard = (() => {
 			console.log(counter)
 			if(counter == 9) { return -1 }
 		}
-		
+
 		return 0;
+	}
+
+	const _getIndexOfCell = function (cell) {
+		var i = 0;
+		while((cell = cell.previousSibling) != null){
+			i++;
+		}
+		return i;
 	}
 
 	return { board, clear, move, checkWin };
@@ -55,10 +72,6 @@ const DisplayController = (() => {
 	return { renderBoard }
 })();
 
-const playerFactory = (name, side) => {
-	return { name, side }
-};
-
 const Game = (() => {
 
 	let currentPlayer = undefined;
@@ -79,27 +92,11 @@ const Game = (() => {
 		
 		document.getElementById("board").addEventListener('click', function(e) {
 			if(e.target && e.target.matches("div.cell")) {
-				_makeMove(e.target);
+				GameBoard.move(currentPlayer, e.target);
+				_update;
 			}
 		}, false);
 
-	}
-
-	const _makeMove = function (cell) {
-		if(cell.innerHTML) { alert("You need to pick an empty spot on the board!"); }
-		else { 
-			i = _getIndexOfCell(cell);
-			GameBoard.move(currentPlayer, i);
-			_update();
-		}
-	}
-
-	const _getIndexOfCell = function (cell) {
-		var i = 0;
-		while((cell = cell.previousSibling) != null){
-			i++;
-		}
-		return i;
 	}
 
 	const _update = function () {
