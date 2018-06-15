@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(160, 190, 204);
+    background-color: rgb(52, 79, 92);
 }
 
 #board {
@@ -17,10 +17,13 @@ body {
     justify-content: center;
     height: 250px;
     background-color: azure;
-    color: rgb(61, 31, 14);
+    color: rgb(47, 70, 64);
+    background-color: rgb(87, 114, 172);
+    border: 1px solid black;
     font-size: 7rem;
 }
 
-.cell:nth-child(odd) {
-    background-color: rgb(87, 114, 172);
+.cell:hover {
+    background-color: rgb(89, 185, 192);
+    border: 1px solid white;
 }
