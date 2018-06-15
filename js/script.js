@@ -10,7 +10,33 @@ const GameBoard = (() => {
 		this.board.splice(position, 1, player.side)
 	}
 
-	return { board, clear, move };
+	const checkWin = function (player) {
+		const winConditions = [[1,2,3],[4,5,6],[7,8,9],[1,5,9],[7,5,3],[1,4,7],[2,5,8],[3,6,9]];
+
+		for(var i = 0; i < winConditions.length; i++){
+			var counter = 0;
+			for(var j = 0; j < winConditions[i].length; j++){
+				if (document.getElementById("board").childNodes[(winConditions[i][j])-1].innerHTML.toUpperCase() === player.side.toUpperCase()){
+					counter++;
+				}
+				if(counter == 3) { return 1 }
+			}
+		}
+
+		var counter = 0;
+		for(var i = 0; i < document.getElementById("board").childNodes.length; i++){ 
+			
+			if (document.getElementById("board").childNodes[i].innerHTML != ''){
+				counter++;
+			}
+			console.log(counter)
+			if(counter == 9) { return -1 }
+		}
+		
+		return 0;
+	}
+
+	return { board, clear, move, checkWin };
 
 })();
 
@@ -78,29 +104,18 @@ const Game = (() => {
 
 	const _update = function () {
 		_render();
-		if (_checkWin()){
-			alert(`${currentPlayer}.name has won!`);
-		}
-		else{
-			currentPlayer = (currentPlayer === player1 ? player2 : player1);
-		}
-	}
 
-	const _checkWin = function () {
-		const winConditions = [[1,2,3],[4,5,6],[7,8,9],[1,5,9],[7,5,3],[1,4,7],[2,5,8],[3,6,9]];
-
-		for(var i = 0; i < winConditions.length; i++){
-			var counter = 0;
-			for(var j = 0; j < winConditions[i].length; j++){
-				console.log(winConditions[i][j])
-				if (document.getElementById("board").childNodes[(winConditions[i][j])-1].innerHTML.toUpperCase() === currentPlayer.side.toUpperCase()){
-					
-					counter++;
-				}
-				if(counter == 3) { return true }
-			}
+		switch(GameBoard.checkWin(currentPlayer)){
+			case 1: 
+				alert(`${currentPlayer.name} wins!`);
+				break;
+			case -1:
+				alert("Draw!");
+				break;
+			default:
+				currentPlayer = (currentPlayer === player1 ? player2 : player1);
 		}
-		return false
+
 	}
 
 	return { create }
